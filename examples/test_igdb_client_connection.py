@@ -37,8 +37,7 @@ offset = 0
 
 all_games = []
 
-for page in range(3):
-
+for page in range(n):
     query = f"""
     fields
         name,
