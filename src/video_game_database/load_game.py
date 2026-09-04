@@ -40,7 +40,8 @@ def get_game(
         name,
         slug,
         first_release_date,
-        total_rating;
+        total_rating,
+        genres;
     where id = {game_id};
     """
 
@@ -89,14 +90,38 @@ def insert_game(
     conn.commit()
 
 
+def get_genres(
+    client: IgdbClient,
+    genre_ids: list[int],
+) -> list[dict]:
+    genres = []
+
+    for genre_id in genre_ids:
+        query = f"""
+        fields
+            id,
+            name;
+        where id = {genre_id};
+        """
+
+        result = client.query(
+            endpoint="genres",
+            query=query,
+        )
+
+        genres.extend(result)
+
+    return genres
+
+
 if __name__ == "__main__":
     igdb = get_igdb_client()
-    conn = get_connection()
 
-    game = get_game(igdb, 7346)
+    game = get_game(igdb, 7346)[0]
 
-    insert_game(conn, game[0])
+    genres = get_genres(
+        igdb,
+        game["genres"],
+    )
 
-    conn.close()
-
-    print("Game inserted successfully!")
+    print(genres)
