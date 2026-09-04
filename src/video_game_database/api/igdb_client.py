@@ -50,7 +50,9 @@ class IgdbClient:
     def query(
         self,
         endpoint: str,
-        query: str
+        query: str,
+        limit: int = 500,
+        max_results: int | None = None,
     ) -> list[dict]:
         """Send a query to an IGDB endpoint."""
 

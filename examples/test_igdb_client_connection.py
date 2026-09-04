@@ -10,10 +10,14 @@ fields
     name,
     first_release_date,
     rating;
-limit 10;
 """
 
-games = client.query("games", query)
+games = client.query(
+    endpoint="games",
+    query=query,
+    limit=100,
+    max_results=1000
+)
 
 for game in games:
     print(game["name"])
