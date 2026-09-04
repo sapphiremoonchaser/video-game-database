@@ -5,6 +5,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
+from api.igdb_client import IgdbClient
 
 load_dotenv()
 
